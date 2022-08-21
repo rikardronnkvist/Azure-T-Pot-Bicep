@@ -32,5 +32,8 @@ Write-Host "T-Pot is soon available at"
 Write-Host "  Web:   https://$($PublicIP):64297"
 Write-Host "  SSH:   ssh://$($TemplateParams.vmAdminUsername)@$($PublicIP):64295"
 
-
 ``` 
+It will take a while for the VM to restart and get all services up and running
+
+Usernames and password for the web interface can be found in the file ![tpot.conf](./tpot.conf)
+The login details specified in $TemplateParams are only in use for the VM
