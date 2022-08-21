@@ -1,11 +1,12 @@
 # T-Pot Honeypot in Azure
 
-Will create a T-Pot honeypot based on Debian
+Will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce#installation) based on Debian
+
 
 # Run with Powershell
+The script will lookup a DNS-name of your choice and allow that IP to use the T-Pot administration
 
 ```powershell
-
 Connect-AzAccount
 
 $homeDnsNamne = "xyz.abcd.nu"
@@ -23,12 +24,13 @@ $TemplateParams = @{
 $deploymentName = "T-Pot_$( Get-Date -Format 'yyyy-MM-dd' )"
 $Deployment = New-AzResourceGroupDeployment -ResourceGroupName $rg.ResourceGroupName -Name $deploymentName -TemplateFile .\main.bicep -TemplateParameterObject $TemplateParams -Verbose
 
+Restart-AzVM -ResourceGroupName $rg.ResourceGroupName -Name $Deployment.Outputs.vmName.value -NoWait | Out-Null
 
-Restart-AzVM -ResourceGroupName $rg.ResourceGroupName -Name $Deployment.Outputs.VMName.value -NoWait
+$PublicIP = (Get-AzPublicIpAddress -ResourceGroupName $rg.ResourceGroupName -Name $Deployment.Outputs.publicIpName.value).IpAddress
 
 Write-Host "T-Pot is soon available at"
-Write-Host "  Web:   https://$($Deployment.Outputs.PublicIP.value):64297"
-Write-Host "  SSH:   ssh://$($vmAdminUsername)@$($Deployment.Outputs.PublicIP.value):64295"
+Write-Host "  Web:   https://$($PublicIP):64297"
+Write-Host "  SSH:   ssh://$($TemplateParams.vmAdminUsername)@$($PublicIP):64295"
 
 
 ``` 
