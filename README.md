@@ -1,8 +1,9 @@
 # T-Pot Honeypot in Azure
 
-Will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) based on Debian
+This will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) in Azure based on Debian
 
-**Workflow**
+# Powershell Script Workflow
+
 * DNS lookup of your IP
 * Deploy [main.bicep](./main.bicep) (with verbose logging)
   * Create Storage Account
