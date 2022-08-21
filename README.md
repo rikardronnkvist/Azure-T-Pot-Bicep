@@ -10,12 +10,12 @@ This will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) 
   * Create Public IP
   * Create Network Security Group
     * Allow 64294-64297 from your external IP
-    * Allow all execept admin interface
+    * Allow all (execept admin interface)
   * Create Virtual Network
   * Create Network Interface
   * Create VM
   * Run script [install_tpot.sh](./install_tpot.sh)
-    * Install Docker
+    * Install Docker, Git and some other tools needed
     * GIT clone [https://github.com/telekom-security/tpotce](https://github.com/telekom-security/tpotce)
     * Install T-Pot with config from [tpot.conf](./tpot.conf)
 * Reboot
