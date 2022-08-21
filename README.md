@@ -1,6 +1,6 @@
 # T-Pot Honeypot in Azure
 
-Will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce#installation) based on Debian
+Will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) based on Debian
 
 
 # Run with Powershell
