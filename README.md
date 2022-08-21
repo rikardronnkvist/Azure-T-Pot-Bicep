@@ -2,9 +2,28 @@
 
 Will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) based on Debian
 
+**Workflow**
+* DNS lookup of your IP
+* Deploy [main.bicep](./main.bicep) (with verbose logging)
+  * Create Storage Account
+  * Create Public IP
+  * Create Network Security Group
+    * Allow 64294-64297 from your IP
+    * Allow all execept admin interface
+  * Create Virtual Network
+  * Create Network Interface
+  * Create VM
+  * Runt script [install_tpot.sh](./install_tpot.sh)
+      * Update
+      * Install GIT
+      * Download [tpot.conf](./tpot.conf)
+      * GIT clone [https://github.com/telekom-security/tpotce](https://github.com/telekom-security/tpotce)
+      * Install T-Pot
+* Reboot
+* Output information
 
-# Run with Powershell
-The script will lookup a DNS-name of your choice and allow that IP to use the T-Pot administration
+
+# Powershell Script
 
 ```powershell
 Connect-AzAccount
