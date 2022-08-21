@@ -1,4 +1,4 @@
-
+@description('Resource Group to deploy resource in')
 param location string = resourceGroup().location
 
 @description('SSH UserName')
@@ -6,8 +6,10 @@ param location string = resourceGroup().location
 @maxLength(28)
 param vmAdminUsername string
 
-@secure()
 @description('Password for SSH')
+@secure()
+@minLength(12)
+@maxLength(72)
 param vmAdminPassword string
 
 @description('Allowed IP for T-Pot administration')
@@ -26,7 +28,7 @@ var PublicIPResourceName = 'pip-${ResourceNamingSuffix}'
 var NetworkSecurityGroupResourceName = 'nsg-${ResourceNamingSuffix}'
 var virtualNetworkResourceName = 'vnet-${ResourceNamingSuffix}'
 var virtualMachineResourceName = 'vm-${virtualMachineName}-${ResourceNamingSuffix}'
-var nicResourceName = '${virtualMachineName}nic01'
+var nicResourceName = 'nic-${virtualMachineName}-${ResourceNamingSuffix}'
 var vmPublisher = 'debian'
 var vmOffer = 'debian-11'
 var vmSku = '11-gen2'
@@ -182,27 +184,6 @@ resource virtualMachineResource 'Microsoft.Compute/virtualMachines@2020-06-01' =
   ]
 }
 
-resource virtualMachineResourceInstallDocker 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
-  parent: virtualMachineResource
-  name: 'install_docker'
-  location: location
-  properties: {
-    publisher: 'Microsoft.Azure.Extensions'
-    type: 'CustomScript'
-    typeHandlerVersion: '2.1'
-    autoUpgradeMinorVersion: true
-    settings: {
-      skipDos2Unix: false
-      fileUris: [
-        'https://raw.githubusercontent.com/rirofal/Azure-T-Pot-Bicep/main/install_docker.sh'
-      ]
-    }
-    protectedSettings: {
-      commandToExecute: 'sh install_docker.sh'
-    }
-  }
-}
-
 resource virtualMachineResourceInstallTPot 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
   parent: virtualMachineResource
   name: 'install_tpot'
@@ -222,9 +203,6 @@ resource virtualMachineResourceInstallTPot 'Microsoft.Compute/virtualMachines/ex
       commandToExecute: 'sh install_tpot.sh'
     }
   }
-  dependsOn: [
-    virtualMachineResourceInstallDocker
-  ]
 }
 
 output VMName string = virtualMachineResourceName

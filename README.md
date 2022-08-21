@@ -4,23 +4,20 @@ This will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) 
 
 # Powershell Script Workflow
 
-* DNS lookup of your IP
+* Get your extenal IP via [ipify](https://www.ipify.org/)
 * Deploy [main.bicep](./main.bicep) (with verbose logging)
   * Create Storage Account
   * Create Public IP
   * Create Network Security Group
-    * Allow 64294-64297 from your IP
+    * Allow 64294-64297 from your external IP
     * Allow all execept admin interface
   * Create Virtual Network
   * Create Network Interface
   * Create VM
-  * Run script [install_docker.sh](./install_docker.sh)
   * Run script [install_tpot.sh](./install_tpot.sh)
-    * Update
-    * Install GIT
-    * Download [tpot.conf](./tpot.conf)
+    * Install Docker
     * GIT clone [https://github.com/telekom-security/tpotce](https://github.com/telekom-security/tpotce)
-    * Install T-Pot
+    * Install T-Pot with config from [tpot.conf](./tpot.conf)
 * Reboot
 * Output information
 
@@ -30,11 +27,9 @@ This will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) 
 ```powershell
 Connect-AzAccount
 
-$homeDnsNamne = "xyz.abcd.nu"
 $rg = New-AzResourceGroup -Name "rg-honeypot-test" -Location "West Europe"
 
-
-[string]$HomeCurrentIP = ([System.Net.Dns]::GetHostaddresses($homeDnsNamne) ).IPAddressToString
+$HomeCurrentIP = (Invoke-WebRequest -Uri "https://api.ipify.org").Content.Trim()
 $TemplateParams = @{
     vmAdminUsername = "riro"
     vmAdminPassword = "SuperSecretPassword123!"
