@@ -1,8 +1,8 @@
-# Azure-T-Pot-Testing"
+# T-Pot Honeypot in Azure
 
+Will create a T-Pot honeypot based on Debian
 
-# Run
-Create RG and go...
+# Run with Powershell
 
 ```powershell
 
@@ -29,7 +29,6 @@ Restart-AzVM -ResourceGroupName $rg.ResourceGroupName -Name $Deployment.Outputs.
 Write-Host "T-Pot is soon available at"
 Write-Host "  Web:   https://$($Deployment.Outputs.PublicIP.value):64297"
 Write-Host "  SSH:   ssh://$($vmAdminUsername)@$($Deployment.Outputs.PublicIP.value):64295"
-
 
 
 ``` 
