@@ -182,6 +182,27 @@ resource virtualMachineResource 'Microsoft.Compute/virtualMachines@2020-06-01' =
   ]
 }
 
+resource virtualMachineResourceInstallDocker 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
+  parent: virtualMachineResource
+  name: 'install_docker'
+  location: location
+  properties: {
+    publisher: 'Microsoft.Azure.Extensions'
+    type: 'CustomScript'
+    typeHandlerVersion: '2.1'
+    autoUpgradeMinorVersion: true
+    settings: {
+      skipDos2Unix: false
+      fileUris: [
+        'https://raw.githubusercontent.com/rirofal/Azure-T-Pot-Bicep/main/install_docker.sh'
+      ]
+    }
+    protectedSettings: {
+      commandToExecute: 'sh install_docker.sh'
+    }
+  }
+}
+
 resource virtualMachineResourceInstallTPot 'Microsoft.Compute/virtualMachines/extensions@2020-06-01' = {
   parent: virtualMachineResource
   name: 'install_tpot'
@@ -201,6 +222,9 @@ resource virtualMachineResourceInstallTPot 'Microsoft.Compute/virtualMachines/ex
       commandToExecute: 'sh install_tpot.sh'
     }
   }
+  dependsOn: [
+    virtualMachineResourceInstallDocker
+  ]
 }
 
 output VMName string = virtualMachineResourceName

@@ -14,12 +14,13 @@ This will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) 
   * Create Virtual Network
   * Create Network Interface
   * Create VM
-  * Runt script [install_tpot.sh](./install_tpot.sh)
-      * Update
-      * Install GIT
-      * Download [tpot.conf](./tpot.conf)
-      * GIT clone [https://github.com/telekom-security/tpotce](https://github.com/telekom-security/tpotce)
-      * Install T-Pot
+  * Run script [install_docker.sh](./install_docker.sh)
+  * Run script [install_tpot.sh](./install_tpot.sh)
+    * Update
+    * Install GIT
+    * Download [tpot.conf](./tpot.conf)
+    * GIT clone [https://github.com/telekom-security/tpotce](https://github.com/telekom-security/tpotce)
+    * Install T-Pot
 * Reboot
 * Output information
 
