@@ -17,10 +17,9 @@ This will create a [T-Pot Honeypot](https://github.com/telekom-security/tpotce) 
   * Run script [install_tpot.sh](./install_tpot.sh)
     * Install Docker, Git and some other tools needed
     * GIT clone [https://github.com/telekom-security/tpotce](https://github.com/telekom-security/tpotce)
-    * Install T-Pot with config from [tpot.conf](./tpot.conf)
+    * Generate tpot.conf
+    * Install T-Pot
 * Reboot
 * Output information
 
 It will take a while for the VM to restart and get all services up and running
-
-Usernames and password for the web interface can be found in the file [tpot.conf](./tpot.conf)

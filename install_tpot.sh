@@ -16,5 +16,17 @@ sudo apt-get install git pip conntrack --yes
 sudo pip3 install yq --no-input 
 
 git clone https://github.com/telekom-security/tpotce
-wget https://raw.githubusercontent.com/rirofal/Azure-T-Pot-Bicep/main/tpot.conf
+
+while getopts f:u:p: flag
+do
+    case "${flag}" in
+        f) flavor=${OPTARG};;
+        u) webuser=${OPTARG};;
+        p) webpass=${OPTARG};;
+    esac
+done
+echo "myCONF_TPOT_FLAVOR='$flavor'" > ./tpot.conf
+echo "myCONF_WEB_USER='$webuser'" >> ./tpot.conf
+echo "myCONF_WEB_PW='$webpass'" >> ./tpot.conf
+
 sudo tpotce/iso/installer/install.sh --type=auto --conf=./tpot.conf

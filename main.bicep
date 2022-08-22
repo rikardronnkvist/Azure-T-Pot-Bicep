@@ -1,16 +1,28 @@
 @description('Resource Group to deploy resource in')
 param location string = resourceGroup().location
 
-@description('SSH UserName')
+@description('UserName for SSH and Web')
 @minLength(2)
 @maxLength(28)
-param vmAdminUsername string
+param tpotAdminUsername string
 
-@description('Password for SSH')
+@description('Password for SSH and Web')
 @secure()
 @minLength(12)
 @maxLength(72)
-param vmAdminPassword string
+param tpotAdminPassword string
+
+@allowed([
+  'STANDARD'
+  'HIVE'
+  'HIVE_SENSOR'
+  'INDUSTRIAL'
+  'LOG4J'
+  'MEDICAL'
+  'MINI'
+  'SENSOR'
+])
+param tpotFlavor string = 'STANDARD'
 
 @description('Allowed IP for T-Pot administration')
 @minLength(7)
@@ -155,8 +167,8 @@ resource virtualMachineResource 'Microsoft.Compute/virtualMachines@2020-06-01' =
     }
     osProfile: {
       computerName: virtualMachineName
-      adminUsername: vmAdminUsername
-      adminPassword: vmAdminPassword
+      adminUsername: tpotAdminUsername
+      adminPassword: tpotAdminPassword
     }
     storageProfile: {
       imageReference: {
@@ -200,7 +212,7 @@ resource virtualMachineResourceInstallTPot 'Microsoft.Compute/virtualMachines/ex
       ]
     }
     protectedSettings: {
-      commandToExecute: 'sh install_tpot.sh'
+      commandToExecute: 'sh install_tpot.sh -u ${tpotAdminUsername} -p ${tpotAdminPassword} -f ${tpotFlavor}'
     }
   }
 }
