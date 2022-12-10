@@ -208,7 +208,7 @@ resource virtualMachineResourceInstallTPot 'Microsoft.Compute/virtualMachines/ex
     settings: {
       skipDos2Unix: false
       fileUris: [
-        'https://raw.githubusercontent.com/rirofal/Azure-T-Pot-Bicep/main/install_tpot.sh'
+        'https://raw.githubusercontent.com/rikardronnkvist/Azure-T-Pot-Bicep/main/install_tpot.sh'
       ]
     }
     protectedSettings: {
